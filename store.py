@@ -12,7 +12,7 @@ def getCash():
 def setPriceProduct(code, price):
     quantProducts[code]=price
 def saleProduct(code):
-    if quantProducts[code]>0:
+    if code in quantProducts:
         return True
     else:
         return False
@@ -32,6 +32,15 @@ def getFullStock():
         print("[",elem," – ",quantProducts[elem]," – ",priceProducts[elem],"]")
     print("Cash: ",getCash(),"€")
 
+def getcode():
+    code=int(input("Enter product code: "))
+    if code in quantProducts:
+        return code
+    else:
+        print("Error, item does not exist or is out of stock!.")
+        return False
+
+
 while(True):
     print("1.- Show full store detail")
     print("2.- Sales")
@@ -48,7 +57,9 @@ while(True):
         else:
             print("Error, item does not exist or is out of stock!.")
     elif option==3:
-        code=int(input("Enter product code: "))
+        code=getcode()
+        if code==False: 
+            continue
         quantity=int(input("Units to replace: "))
         if replaceProduct(code,quantity):
             print("Correct replacement!")
@@ -56,9 +67,13 @@ while(True):
             print("There is no cash in the box to replace!")
 
     elif option==4:
-        code=int(input("Enter product code: "))
+        code=getcode()
+        if code==False: 
+            continue
         quantity=int(input("New price for product: "))
         setPriceProduct(code,quantity)
         print("Updated price!")
     elif option==5:
         break
+    else:
+        continue
